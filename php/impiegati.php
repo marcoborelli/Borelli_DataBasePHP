@@ -22,7 +22,7 @@ $sheetNumber = 1;
     <div class="container">
         <div class="dataAndFilter">
             <div class="filter">
-                <form action="" method="POST">
+                <form action="" method="POST" id="formImpiegati">
 
                     <label for="surnameInImpiegati">Cognome:</label>
                     <input type="text" name="surnameInImpiegati" value=<?php echo (isset($_POST['surnameInImpiegati']) ? $_POST['surnameInImpiegati'] : "") ?>>
@@ -56,7 +56,6 @@ $sheetNumber = 1;
                     <br>
 
                     <input type="submit" value="filterInDipartimenti">
-                    <!--<input type="submit" value="resetAllInDipartimenti" id="resetAllInDipartimenti">-->
                 </form>
             </div>
             <div class="insData">

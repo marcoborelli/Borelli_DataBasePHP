@@ -22,7 +22,7 @@ $sheetNumber = 3;
     <div class="container">
         <div class="dataAndFilter">
             <div class="filter">
-                <form action="" method="POST">
+                <form action="" method="POST" id="formPartecipazioni">
 
                     <label for="projNameInPartecipazioni">Nome progetto:</label>
                     <input type="text" name="projNameInPartecipazioni"
@@ -36,7 +36,6 @@ $sheetNumber = 3;
                     <br>
 
                     <input type="submit" value="filterInDipartimenti">
-                    <!--<input type="submit" value="resetAllInDipartimenti" id="resetAllInDipartimenti">-->
                 </form>
             </div>
             <div class="insData">
