@@ -106,36 +106,44 @@ class Database
     function getTable($index, $queryOutp)
     {
 
-        $outp = "<table border=\"5\">";
+        $outp = "<table class=\"table\" >";
 
         switch ($index) {
             case 0: //dipartimenti
-                $outp .= "<tr><th>Codice</th><th>Nome</th><th>Sede</th><th>Cognome Responsabile</th></tr>";
+                $outp .= "<thead><tr><th scope=\"col\">Codice</th><th scope=\"col\">Nome</th><th scope=\"col\">Sede</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
 
+                $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<tr><td>" . $row['codice'] . "</td><td>" . $row['nome'] . "</td><td>" . $row['sede'] . "</td><td>" . $row['cognome responsabile'] . " (" . $row['matricola'] . ")" . "</td></tr>";
                 }
+                $outp .= "</tbody>";
                 break;
             case 1: //impiegati
-                $outp .= "<tr><th>Matricola</th><th>Cognome</th><th>Stipendio</th><th>Dipartimento</th></tr>";
+                $outp .= "<thead><tr><th scope=\"col\">Matricola</th><th scope=\"col\">Cognome</th><th scope=\"col\">Stipendio</th><th scope=\"col\">Dipartimento</th></tr></thead>";
 
+                $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<tr><td>" . $row['matricola'] . "</td><td>" . $row['cognome'] . "</td><td>" . $row['stipendio'] . "</td><td>" . $row['nome dipartimento'] . " (" . $row['codice'] . ")" . "</td></tr>";
                 }
+                $outp .= "</tbody>";
                 break;
             case 2: //progetti
-                $outp .= "<tr><th>Sigla</th><th>Nome</th><th>Bilancio</th><th>Cognome Responsabile</th></tr>";
+                $outp .= "<thead><tr><th scope=\"col\">Sigla</th><th scope=\"col\">Nome</th><th>Bilancio</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
 
+                $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<tr><td>" . $row['sigla'] . "</td><td>" . $row['nome'] . "</td><td>" . $row['bilancio'] . "</td><td>" . $row['cognome responsabile'] . " (" . $row['matricola'] . ")" . "</td></tr>";
                 }
+                $outp .= "</tbody>";
                 break;
             case 3: //partecipazioni
-                $outp .= "<tr><th>Cognome impiegato</th><th>Nome progetto</th></tr>";
+                $outp .= "<thead><tr><th scope=\"col\">Cognome impiegato</th><th scope=\"col\">Nome progetto</th></tr></thead>";
 
+                $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<tr><td>" . $row['cognome impiegato'] . " (" . $row['matricola'] . ")" . "</td><td>" . $row['nome progetto'] . " (" . $row['sigla'] . ")" . "</td></tr>";
                 }
+                $outp .= "</tbody>";
                 break;
         }
 
