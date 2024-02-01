@@ -7,6 +7,8 @@ if (!isset($_SESSION["DATABASE"])) {
     header("location:../html/login.html");
     exit();
 }
+
+$sheetNumber = 2;
 ?>
 
 <head>
@@ -73,7 +75,7 @@ if (!isset($_SESSION["DATABASE"])) {
                 $bilancio = $_POST['bilancioInDipartimenti'];
                 $cognomeResp = $_POST['surnameRespInDipartimenti']. "%";
             
-                $query = $db->getBasicQuery(2);
+                $query = $db->getBasicQuery($sheetNumber);
                 $query .= " WHERE progetti.sigla LIKE :siglaProg AND progetti.nome LIKE :nomeProg AND impiegati.cognome LIKE :cognomeResp";
                 if ($operatoreInBilancio != "") {
                     $query .= " AND progetti.bilancio $operatoreInBilancio :bilancio";
@@ -89,9 +91,9 @@ if (!isset($_SESSION["DATABASE"])) {
                     $tmpStatm->bindParam(':bilancio', $bilancio, PDO::PARAM_INT);
                 }
             
-                echo $db->getTable(2, $db->executeQuery($tmpStatm));
+                echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
             } else {
-                echo $db->getBasicTable(2);
+                echo $db->getBasicTable($sheetNumber);
             }
             
             ?>
