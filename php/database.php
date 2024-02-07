@@ -11,8 +11,20 @@ class Database
     public static function getDatbase($username, $password)
     { //Singleton
         if (self::$database === null) {
-            self::$database = new Database($username, $password);
-            //echo self::$database->getBasicQuery(0);
+            self::$database = new Database("visualizzatore", 123456);
+
+            $query = "SELECT users.id FROM users WHERE users.username = :username AND users.password = :pwd";
+            $tmpStatm = self::$database->getStatement($query);
+            $tmpStatm->bindParam(':username', $username, PDO::PARAM_STR);
+            $tmpStatm->bindParam(':pwd', hash("sha512", $password), PDO::PARAM_STR);
+            $res = self::$database->executeQuery($tmpStatm);
+
+            if (count($res) == 0) {
+                self::$database = null;
+            } else {
+                self::$database = new Database($username, $password);
+            }
+
         }
 
         return self::$database;
