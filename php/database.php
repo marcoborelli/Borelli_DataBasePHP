@@ -7,6 +7,18 @@ class Database
     private $password;
     private $conn = null;
 
+    private $loggedUsername;
+
+
+    public function getPermissionLoggedUser()
+    {
+        $query = "SELECT * FROM users WHERE users.username = :username";
+        $tmpStatm = self::$database->getStatement($query);
+        $tmpStatm->bindParam(':username', $this->loggedUsername, PDO::PARAM_STR);
+
+        $res = self::$database->executeQuery($tmpStatm);
+        return $res[0]['permessi'];
+    }
 
     public function login($username, $password) //-1 = nome utente sbagliato; 0 = nome utente esistene, pwd sbagliata; 1 = loggato
     {
@@ -32,6 +44,7 @@ class Database
             return 0;
         }
 
+        $this->loggedUsername = $username;
         return 1;
     }
 
