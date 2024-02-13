@@ -10,6 +10,33 @@ class Database
     private $loggedUsername;
 
 
+    public static function addNewUser($username, $password) //-1 = utente gia' esiste; 0 = ok
+    {
+        $pwd = hash("sha512", $password);
+        $permessi = 0;
+
+        self::getDatbase();
+
+        $checkIfExist = self::$database->login($username, $password);
+
+        if ($checkIfExist != -1) {
+            self::$database = null;
+            return -1;
+        }
+
+        $query = "INSERT INTO users (username, password, permessi) VALUES (:username, :pwd, :permessi)";
+        $stmt = self::$database->getStatement($query);
+
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->bindParam(":pwd", $pwd, PDO::PARAM_STR);
+        $stmt->bindParam(":permessi", $permessi, PDO::PARAM_INT);
+
+        self::$database->executeQuery($stmt);
+
+        self::$database = null; //dopo il login non mi interessa che il db abbia ancora le credenziali
+        return 0;
+    }
+
     public function getPermissionLoggedUser()
     {
         $query = "SELECT * FROM users WHERE users.username = :username";
