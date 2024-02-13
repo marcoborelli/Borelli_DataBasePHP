@@ -5,14 +5,21 @@ session_start();
 $name = $_POST['user'];
 $password = $_POST['password'];
 
-$database = Database::getDatbase($name, $password);
+$database = Database::getDatbase();
 
-if ($database === null) {
-    //unset($_SESSION["PRIVILEGI_UTENTE"]);
-    unset($_SESSION["DATABASE"]);
-    echo "non autenticato";
-} else {
-    $_SESSION["DATABASE"] = $database;
-    header("location:dipartimenti.php");
-    exit();
+$res = $database->login($name, $password);
+
+switch ($res) {
+    case -1:
+        unset($_SESSION["DATABASE"]);
+        echo "Nome utente inesistente";
+        break;
+    case 0:
+        unset($_SESSION["DATABASE"]);
+        echo "Password errata";
+        break;
+    case 1:
+        $_SESSION["DATABASE"] = $database;
+        header("location:dipartimenti.php");
+        break;
 }

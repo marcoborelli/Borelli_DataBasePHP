@@ -8,23 +8,37 @@ class Database
     private $conn = null;
 
 
-    public static function getDatbase($username, $password)
+    public function login($username, $password) //-1 = nome utente sbagliato; 0 = nome utente esistene, pwd sbagliata; 1 = loggato
+    {
+        $pwd = hash("sha512", $password);
+
+        $query = "SELECT users.id FROM users WHERE users.username = :username";
+        $tmpStatm = self::$database->getStatement($query);
+        $tmpStatm->bindParam(':username', $username, PDO::PARAM_STR);
+
+        $res = self::$database->executeQuery($tmpStatm);
+
+        if (count($res) == 0) {
+            return -1;
+        }
+
+        $query = "SELECT users.id FROM users WHERE users.username = :username AND users.password = :pwd";
+        $tmpStatm = self::$database->getStatement($query);
+        $tmpStatm->bindParam(':username', $username, PDO::PARAM_STR);
+        $tmpStatm->bindParam(':pwd', $pwd, PDO::PARAM_STR);
+        $res = self::$database->executeQuery($tmpStatm);
+
+        if (count($res) == 0) {
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public static function getDatbase()
     { //Singleton
         if (self::$database === null) {
-            self::$database = new Database("visualizzatore", 123456);
-
-            $query = "SELECT users.id FROM users WHERE users.username = :username AND users.password = :pwd";
-            $tmpStatm = self::$database->getStatement($query);
-            $tmpStatm->bindParam(':username', $username, PDO::PARAM_STR);
-            $tmpStatm->bindParam(':pwd', hash("sha512", $password), PDO::PARAM_STR);
-            $res = self::$database->executeQuery($tmpStatm);
-
-            if (count($res) == 0) {
-                self::$database = null;
-            } else {
-                self::$database = new Database($username, $password);
-            }
-
+            self::$database = new Database("programma", 123456);
         }
 
         return self::$database;
