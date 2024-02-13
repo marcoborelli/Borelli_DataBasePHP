@@ -169,20 +169,21 @@ class Database
         return $this->getTable($index, $this->executeQuery($this->getStatement($this->getBasicQuery($index))));
     }
 
-    public static function getValueInParentheses($stringa) {
+    public static function getValueInParentheses($stringa)
+    {
         $inizio = strpos($stringa, '(');
         $fine = strpos($stringa, ')');
-        
+
         if ($inizio !== false && $fine !== false && $fine > $inizio) {
-          return substr($stringa, $inizio + 1, $fine - $inizio - 1);
+            return substr($stringa, $inizio + 1, $fine - $inizio - 1);
         }
-        
+
         return null;
-      }
+    }
 
     private function closeConnection()
     {
-        $conn = null;
+        $this->conn = null;
     }
 
     private function openConnection()
