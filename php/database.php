@@ -161,6 +161,22 @@ class Database
                     $outp .= "<option " . $toIns . " value = '" . $dato['codice'] . "'>" . $dato['nome'] . "</option>";
                 }
                 break;
+            case 1:
+                $data = $this->executeQuery($this->getStatement($this->getBasicQuery(1)));
+                foreach ($data as $dato) {
+                    $toIns = $selectedData === $dato['matricola'] ? "selected" : "";
+
+                    $outp .= "<option " . $toIns . " value = '" . $dato['matricola'] . "'>" . $dato['cognome'] . "</option>";
+                }
+                break;
+            case 2:
+                $data = $this->executeQuery($this->getStatement($this->getBasicQuery(2)));
+                foreach ($data as $dato) {
+                    $toIns = $selectedData === $dato['sigla'] ? "selected" : "";
+
+                    $outp .= "<option " . $toIns . " value = '" . $dato['sigla'] . "'>" . $dato['nome'] . "</option>";
+                }
+                break;
         }
 
 
@@ -181,7 +197,7 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td>" . $row['codice'] . "</td><td>" . $row['nome'] . "</td><td>" . $row['sede'] . "</td><td>" . $row['cognome responsabile'] . " (" . $row['matricola'] . ")" . "</td></tr>";
+                    $outp .= "<tr><td> <input type='text' value='" . $row['codice'] . "'/> </td><td> <input type='text' value='" . $row['nome'] . "'/> </td><td> <input type='text' value='" . $row['sede'] . "'/> </td><td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola']) . "</td></tr>";
                 }
                 $outp .= "</tbody>";
                 break;
@@ -190,7 +206,7 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td>" . $row['matricola'] . "</td><td>" . $row['cognome'] . "</td><td>" . $row['stipendio'] . "</td><td>" . $row['nome dipartimento'] . " (" . $row['codice'] . ")" . "</td></tr>";
+                    $outp .= "<tr><td> <input type='text' value='" . $row['matricola'] . "'/> </td><td> <input type='text' value='" . $row['cognome'] . "'/> </td><td> <input type='text' value='" . $row['stipendio'] . "'/> </td><td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice']) . "</td></tr>";
                 }
                 $outp .= "</tbody>";
                 break;
@@ -199,7 +215,7 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td>" . $row['sigla'] . "</td><td>" . $row['nome'] . "</td><td>" . $row['bilancio'] . "</td><td>" . $row['cognome responsabile'] . " (" . $row['matricola'] . ")" . "</td></tr>";
+                    $outp .= "<tr><td> <input type='text' value='" . $row['sigla'] . "'/> </td><td> <input type='text' value='" . $row['nome'] . "'/> </td><td> <input type='text' value='" . $row['bilancio'] . "'/> </td><td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola']) . "</td></tr>";
                 }
                 $outp .= "</tbody>";
                 break;
@@ -208,7 +224,7 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td>" . $row['cognome impiegato'] . " (" . $row['matricola'] . ")" . "</td><td>" . $row['nome progetto'] . " (" . $row['sigla'] . ")" . "</td></tr>";
+                    $outp .= "<tr><td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola']) . "</td><td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla']) . "</td></tr>";
                 }
                 $outp .= "</tbody>";
                 break;
