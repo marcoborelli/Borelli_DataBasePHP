@@ -77,7 +77,7 @@ $sheetNumber = 1;
                     <label>Nome dipartimento:</label>
                     <?php
                         $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInDipartimenti", true)
+                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegati", true, "")
                     ?>
 
                     <br>
@@ -100,7 +100,7 @@ $sheetNumber = 1;
                 $cognImp = $_POST['surnameInImpiegati'] . "%";
                 $operatore = $_POST['cbOperatoreStipendioInDipartimenti'];
                 $stipendio = $_POST['stipendioInDipartimenti'];
-                $idDipartimento = Database::getValueInParentheses($_POST['cbNomeDipartimentoInDipartimenti']);
+                $idDipartimento = $_POST['cbNomeDipartimentoInDipartimenti']; //TODO: da vedere se prende davvero il value o no
 
                 $query = $db->getBasicQuery($sheetNumber);
                 $query .= " WHERE impiegati.cognome LIKE :cognImp";

@@ -145,7 +145,7 @@ class Database
         return $toReturn;
     }
 
-    function getBasicComboBox($index, $name, $isFirstSpace)
+    function getBasicComboBox($index, $name, $isFirstSpace, $selectedData)
     {
         $outp = "<select name='$name'>";
 
@@ -157,7 +157,8 @@ class Database
             case 0:
                 $data = $this->executeQuery($this->getStatement($this->getBasicQuery(0)));
                 foreach ($data as $dato) {
-                    $outp .= "<option>" . $dato['nome'] . " (" . $dato['codice'] . ")" . "</option>";
+                    $toIns = $selectedData === $dato['codice'] ? "selected" : "";
+                    $outp .= "<option " . $toIns . " value = '" . $dato['codice'] . "'>" . $dato['nome'] . "</option>";
                 }
                 break;
         }
