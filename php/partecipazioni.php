@@ -6,6 +6,20 @@ session_start();
 if (!isset($_SESSION["DATABASE"])) {
     header("location:../html/login.html");
     exit();
+} else if (isset($_POST['cbCognomeImpiegatoInPartecipazioniIns'])) { //se ho aggiunto un nuovo record
+    $db = clone $_SESSION["DATABASE"];
+
+    $cognInPartec = $_POST['cbCognomeImpiegatoInPartecipazioniIns'];
+    $nomProgInPartec = $_POST['cbNomeProgettoInPartecipazioniIns'];
+
+    $query = "INSERT INTO partecipazioni (id_impiegato, id_progetto) VALUES(:impieg, :nomeProg)";
+
+    $tmpStatm = $db->getStatement($query);
+
+    $tmpStatm->bindParam(':impieg', $cognInPartec, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':nomeProg', $nomProgInPartec, PDO::PARAM_STR);
+
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 3;
@@ -65,7 +79,26 @@ $sheetNumber = 3;
                 </form>
             </div>
             <div class="insData">
-                
+                <form action="" method="POST" id="formPartecipazioniIns">
+
+                    <label for="cbCognomeImpiegatoInPartecipazioniIns">Cognome impiegato [PK]:</label>
+                    <?php
+                        $db = clone $_SESSION["DATABASE"];
+                        echo $db->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniIns", false, "")
+                    ?>
+
+                    <br>
+
+                    <label for="cbNomeProgettoInPartecipazioniIns">Nome progetto [PK]:</label>
+                    <?php
+                        $db = clone $_SESSION["DATABASE"];
+                        echo $db->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniIns", false, "")
+                    ?>
+
+                    <br>
+
+                    <input type="submit" value="INSERISCI">
+                </form>
             </div>
         </div>
         <div class="table" id="tabella">
