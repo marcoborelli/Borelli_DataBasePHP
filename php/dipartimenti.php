@@ -24,7 +24,7 @@ $sheetNumber = 0;
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Borelli_DatabasePHP</a>
+        <a class="navbar-brand">Borelli_DatabasePHP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -52,30 +52,24 @@ $sheetNumber = 0;
                 <form action="" method="POST" id="formDipartimenti">
 
                     <label for="cityNameInDipartimenti">Nome città:</label>
-                    <input type="text" name="cityNameInDipartimenti"
-                        value=<?php echo (isset($_POST['cityNameInDipartimenti']) ? $_POST['cityNameInDipartimenti'] : "") ?>>
-
-                        <br>
+                    <input type="text" name="cityNameInDipartimenti" value=<?php echo (isset($_POST['cityNameInDipartimenti']) ? $_POST['cityNameInDipartimenti'] : "") ?>> <br>
 
                     <label for="surnameRespInDipartimenti">Cognome responsabile:</label>
-                    <input type="text" name="surnameRespInDipartimenti" id="surnameRespInDipartimenti" value=<?php echo (isset($_POST['surnameRespInDipartimenti']) ? $_POST['surnameRespInDipartimenti'] : "") ?>>
+                    <input type="text" name="surnameRespInDipartimenti" value=<?php echo (isset($_POST['surnameRespInDipartimenti']) ? $_POST['surnameRespInDipartimenti'] : "") ?>>
 
                     <br>
 
-                    <input type="submit" value="filterInDipartimenti">
+                    <input type="submit" value="FILTRA">
                 </form>
             </div>
             <div class="insData">
-                
             </div>
         </div>
         <div class="table" id="tabella">
             <?php
 
             $db = clone $_SESSION["DATABASE"];
-            if (
-                isset($_POST['cityNameInDipartimenti']) && isset($_POST['surnameRespInDipartimenti'])
-                /*&& $_POST['cityNameInDipartimenti'] != "" && $_POST['surnameRespInDipartimenti'] != ""*/) {
+            if (isset($_POST['cityNameInDipartimenti']) && isset($_POST['surnameRespInDipartimenti'])) {
 
                 $nomeCitta = $_POST['cityNameInDipartimenti'] . "%";
                 $cognResp = $_POST['surnameRespInDipartimenti'] . "%";

@@ -24,7 +24,7 @@ $sheetNumber = 1;
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Borelli_DatabasePHP</a>
+        <a class="navbar-brand">Borelli_DatabasePHP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -56,10 +56,10 @@ $sheetNumber = 1;
 
                     <br>
 
-                    <label>Stipendio:</label>
+                    <label for="cbOperatoreStipendioInDipartimenti">Stipendio:</label>
                     <select name="cbOperatoreStipendioInDipartimenti">
-                        <?php 
-                        $comboBoxValue = isSet($_SESSION['cbOperatoreStipendioInDipartimenti']) ? $_SESSION['cbOperatoreStipendioInDipartimenti'] : "";
+                        <?php
+                            $comboBoxValue = isset($_SESSION['cbOperatoreStipendioInDipartimenti']) ? $_SESSION['cbOperatoreStipendioInDipartimenti'] : "";
                         ?>
 
                         <option value="" <?php if ($comboBoxValue == "") echo ""; ?>></option>
@@ -71,10 +71,10 @@ $sheetNumber = 1;
                     </select>
 
                     <input type="text" name="stipendioInDipartimenti" id="stipendioInDipartimenti" value=<?php echo (isset($_POST['stipendioInDipartimenti']) ? $_POST['stipendioInDipartimenti'] : "") ?>>
-                    
+
                     <br>
 
-                    <label>Nome dipartimento:</label>
+                    <label for="cbNomeDipartimentoInImpiegati">Nome dipartimento:</label>
                     <?php
                         $db = clone $_SESSION["DATABASE"];
                         echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegati", true, "")
@@ -82,7 +82,7 @@ $sheetNumber = 1;
 
                     <br>
 
-                    <input type="submit" value="filterInDipartimenti">
+                    <input type="submit" value="FILTRA">
                 </form>
             </div>
             <div class="insData">
@@ -93,10 +93,9 @@ $sheetNumber = 1;
             <?php
 
             $db = clone $_SESSION["DATABASE"];
-            if (
-                isset($_POST['surnameInImpiegati']) && isset($_POST['cbOperatoreStipendioInDipartimenti'])
+            if (isset($_POST['surnameInImpiegati']) && isset($_POST['cbOperatoreStipendioInDipartimenti'])
                 && isset($_POST['stipendioInDipartimenti']) && isset($_POST['cbNomeDipartimentoInDipartimenti'])) {
-            
+
                 $cognImp = $_POST['surnameInImpiegati'] . "%";
                 $operatore = $_POST['cbOperatoreStipendioInDipartimenti'];
                 $stipendio = $_POST['stipendioInDipartimenti'];
@@ -110,9 +109,9 @@ $sheetNumber = 1;
                 if ($idDipartimento != "") {
                     $query .= " AND impiegati.id_dipartimento = :idDipartimento";
                 }
-            
+
                 $tmpStatm = $db->getStatement($query);
-            
+
                 $tmpStatm->bindParam(':cognImp', $cognImp, PDO::PARAM_STR);
                 if ($operatore != "") {
                     $tmpStatm->bindParam(':stipendio', $stipendio, PDO::PARAM_INT);
@@ -120,12 +119,12 @@ $sheetNumber = 1;
                 if ($idDipartimento != "") {
                     $tmpStatm->bindParam(':idDipartimento', $idDipartimento, PDO::PARAM_STR);
                 }
-            
+
                 echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
             } else {
                 echo $db->getBasicTable($sheetNumber);
             }
-            
+
             ?>
         </div>
     </div>

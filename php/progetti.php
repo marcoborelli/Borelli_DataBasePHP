@@ -24,7 +24,7 @@ $sheetNumber = 2;
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Borelli_DatabasePHP</a>
+        <a class="navbar-brand">Borelli_DatabasePHP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -80,7 +80,7 @@ $sheetNumber = 2;
 
                     <br>
 
-                    <input type="submit" value="filterInDipartimenti">
+                    <input type="submit" value="FILTRA">
                 </form>
             </div>
             <div class="insData">
@@ -91,16 +91,15 @@ $sheetNumber = 2;
             <?php
 
             $db = clone $_SESSION["DATABASE"];
-            if (
-                isset($_POST['siglaInProgetti']) && isset($_POST['nameInProgetti'])
+            if (isset($_POST['siglaInProgetti']) && isset($_POST['nameInProgetti'])
                 && isset($_POST['cbOperatoreBilancioInProgetti']) && isset($_POST['bilancioInDipartimenti']) && isset($_POST['surnameRespInDipartimenti'])) {
-            
+
                 $siglaProgetto = $_POST['siglaInProgetti'] . "%";
                 $nomeProgetto = $_POST['nameInProgetti'] . "%";
                 $operatoreInBilancio = $_POST['cbOperatoreBilancioInProgetti'];
                 $bilancio = $_POST['bilancioInDipartimenti'];
-                $cognomeResp = $_POST['surnameRespInDipartimenti']. "%";
-            
+                $cognomeResp = $_POST['surnameRespInDipartimenti'] . "%";
+
                 $query = $db->getBasicQuery($sheetNumber);
                 $query .= " WHERE progetti.sigla LIKE :siglaProg AND progetti.nome LIKE :nomeProg AND impiegati.cognome LIKE :cognomeResp";
                 if ($operatoreInBilancio != "") {
@@ -108,7 +107,7 @@ $sheetNumber = 2;
                 }
 
                 $tmpStatm = $db->getStatement($query);
-            
+
                 $tmpStatm->bindParam(':siglaProg', $siglaProgetto, PDO::PARAM_STR);
                 $tmpStatm->bindParam(':nomeProg', $nomeProgetto, PDO::PARAM_STR);
                 $tmpStatm->bindParam(':cognomeResp', $cognomeResp, PDO::PARAM_STR);
@@ -116,12 +115,12 @@ $sheetNumber = 2;
                 if ($operatoreInBilancio != "") {
                     $tmpStatm->bindParam(':bilancio', $bilancio, PDO::PARAM_INT);
                 }
-            
+
                 echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
             } else {
                 echo $db->getBasicTable($sheetNumber);
             }
-            
+
             ?>
         </div>
     </div>

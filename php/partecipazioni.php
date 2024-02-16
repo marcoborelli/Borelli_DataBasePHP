@@ -24,7 +24,7 @@ $sheetNumber = 3;
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Borelli_DatabasePHP</a>
+        <a class="navbar-brand">Borelli_DatabasePHP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -52,17 +52,16 @@ $sheetNumber = 3;
                 <form action="" method="POST" id="formPartecipazioni">
 
                     <label for="projNameInPartecipazioni">Nome progetto:</label>
-                    <input type="text" name="projNameInPartecipazioni"
-                        value=<?php echo (isset($_POST['projNameInPartecipazioni']) ? $_POST['projNameInPartecipazioni'] : "") ?>>
+                    <input type="text" name="projNameInPartecipazioni" value=<?php echo (isset($_POST['projNameInPartecipazioni']) ? $_POST['projNameInPartecipazioni'] : "") ?>>
 
-                        <br>
+                    <br>
 
                     <label for="surnInPartecipazioni">Cognome dipendente:</label>
                     <input type="text" name="surnInPartecipazioni" id="surnInPartecipazioni" value=<?php echo (isset($_POST['surnInPartecipazioni']) ? $_POST['surnInPartecipazioni'] : "") ?>>
 
                     <br>
 
-                    <input type="submit" value="filterInDipartimenti">
+                    <input type="submit" value="FILTRA">
                 </form>
             </div>
             <div class="insData">
@@ -73,8 +72,7 @@ $sheetNumber = 3;
             <?php
 
             $db = clone $_SESSION["DATABASE"];
-            if (
-                isset($_POST['projNameInPartecipazioni']) && isset($_POST['surnInPartecipazioni'])) {
+            if (isset($_POST['projNameInPartecipazioni']) && isset($_POST['surnInPartecipazioni'])) {
 
                 $nomeProgetto = $_POST['projNameInPartecipazioni'] . "%";
                 $cognomeImpiegato = $_POST['surnInPartecipazioni'] . "%";
