@@ -6,6 +6,24 @@ session_start();
 if (!isset($_SESSION["DATABASE"])) {
     header("location:../html/login.html");
     exit();
+} else if (isset($_POST['matricolaInImpiegatiIns'])) { //se ho aggiunto un nuovo record
+    $db = clone $_SESSION["DATABASE"];
+
+    $matricolaImp = $_POST['matricolaInImpiegatiIns'];
+    $cognomeImp = $_POST['cognomeInImpiegatiIns'];
+    $stipendioImp = $_POST['stipendioInImpiegatiIns'];
+    $nomeDipImp = $_POST['cbNomeDipartimentoInImpiegatiIns'];
+
+    $query = "INSERT INTO impiegati (matricola, cognome, stipendio, id_dipartimento) VALUES(:matr, :cognome, :stipendio, :nomeDip)";
+
+    $tmpStatm = $db->getStatement($query);
+
+    $tmpStatm->bindParam(':matr', $matricolaImp, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':cognome', $cognomeImp, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':stipendio', $stipendioImp, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':nomeDip', $nomeDipImp, PDO::PARAM_STR);
+
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 1;
@@ -86,7 +104,33 @@ $sheetNumber = 1;
                 </form>
             </div>
             <div class="insData">
+                <form action="" method="POST" id="formImpiegatiIns">
 
+                    <label for="matricolaInImpiegatiIns">Matricola [PK]:</label>
+                    <input type="text" name="matricolaInImpiegatiIns" required>
+
+                    <br>
+
+                    <label for="cognomeInImpiegatiIns">Cognome:</label>
+                    <input type="text" name="cognomeInImpiegatiIns" required>
+
+                    <br>
+
+                    <label for="stipendioInImpiegatiIns">Stipendio:</label>
+                    <input type="text" name="stipendioInImpiegatiIns" required>
+
+                    <br>
+
+                    <label for="cbNomeDipartimentoInImpiegatiIns">Nome dipartimento:</label>
+                    <?php
+                        $db = clone $_SESSION["DATABASE"];
+                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiIns", false, "")
+                    ?>
+
+                    <br>
+
+                    <input type="submit" value="INSERISCI">
+                </form>
             </div>
         </div>
         <div class="table" id="tabella">
