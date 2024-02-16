@@ -6,6 +6,24 @@ session_start();
 if (!isset($_SESSION["DATABASE"])) {
     header("location:../html/login.html");
     exit();
+} else if (isset($_POST['codiceInDipartimentiIns'])) { //ho aggiunto un nuovo record
+    $db = clone $_SESSION["DATABASE"];
+
+    $codiceDip = $_POST['codiceInDipartimentiIns'];
+    $nomeDip = $_POST['nomeInDipartimenti'];
+    $sedeDip = $_POST['sedeInDipartimenti'];
+    $cognRespDip = $_POST['cbCognomeResponsabileInDipartimentiIns'];
+
+    $query = "INSERT INTO dipartimenti (codice, nome, sede, id_direttore) VALUES(:cod, :nome, :sede, :idResp)";
+
+    $tmpStatm = $db->getStatement($query);
+
+    $tmpStatm->bindParam(':cod', $codiceDip, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':nome', $nomeDip, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':sede', $sedeDip, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':idResp', $cognRespDip, PDO::PARAM_INT);
+
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 0;
@@ -63,6 +81,33 @@ $sheetNumber = 0;
                 </form>
             </div>
             <div class="insData">
+                <form action="" method="POST" id="formDipartimentiIns">
+
+                    <label for="codiceInDipartimentiIns">Codice [PK]:</label>
+                    <input type="text" name="codiceInDipartimentiIns" required>
+
+                    <br>
+
+                    <label for="nomeInDipartimenti">Nome dipartimento:</label>
+                    <input type="text" name="nomeInDipartimenti" required>
+
+                    <br>
+
+                    <label for="sedeInDipartimenti">Sede:</label>
+                    <input type="text" name="sedeInDipartimenti" required>
+
+                    <br>
+
+                    <label for="cbCognomeResponsabileInDipartimentiIns">Cognome responsabile:</label>
+                    <?php
+                        $db = clone $_SESSION["DATABASE"];
+                        echo $db->getBasicComboBox(1, "cbCognomeResponsabileInDipartimentiIns", false, "")
+                    ?>
+
+                    <br>
+
+                    <input type="submit" value="INSERISCI">
+                </form>
             </div>
         </div>
         <div class="table" id="tabella">
