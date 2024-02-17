@@ -67,7 +67,7 @@ $sheetNumber = 1;
     <div class="container">
         <div class="dataAndFilter">
             <div class="filter">
-                <form action="" method="POST" id="formImpiegati">
+                <form action="" method="POST" id="formImpiegatiFilter">
 
                     <label for="surnameInImpiegati">Cognome:</label>
                     <input type="text" name="surnameInImpiegati" value=<?php echo (isset($_POST['surnameInImpiegati']) ? $_POST['surnameInImpiegati'] : "") ?>>
