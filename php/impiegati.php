@@ -24,6 +24,26 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':nomeDip', $nomeDipImp, PDO::PARAM_STR);
 
     $db->executeQuery($tmpStatm);
+} else if (isset($_POST['pk'])) {
+    $db = clone $_SESSION["DATABASE"];
+
+    $oldPk = $_POST['pk'];
+    $matricolaImp = $_POST['matricolaTable'];
+    $cognomeImp = $_POST['cognomeTable'];
+    $stipendioImp = $_POST['stipendioTable'];
+    $idDipImp = $_POST['cbNomeDipartimentoInImpiegatiTable'];
+
+    $query = "UPDATE impiegati SET matricola = :matricola, cognome = :cognome, stipendio = :stipendio, id_dipartimento = :idDip WHERE impiegati.matricola = :oldPk";
+
+    $tmpStatm = $db->getStatement($query);
+
+    $tmpStatm->bindParam(':matricola', $matricolaImp, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':oldPk', $oldPk, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':cognome', $cognomeImp, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':stipendio', $stipendioImp, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':idDip', $idDipImp, PDO::PARAM_STR);
+
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 1;

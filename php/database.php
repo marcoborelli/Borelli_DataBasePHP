@@ -216,7 +216,16 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td> <input type='text' value='" . $row['matricola'] . "'/> </td><td> <input type='text' value='" . $row['cognome'] . "'/> </td><td> <input type='text' value='" . $row['stipendio'] . "'/> </td><td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice']) . "</td></tr>";
+                    $outp .= "<form id='formImp" . $counter . "' action='impiegati.php' method='POST'>
+                    <tr>
+                    <td> <input type='text' name='matricolaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "'/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
+                    <td> <input type='text' name='cognomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['cognome'] . "'/> </td>
+                    <td> <input type='text' name='stipendioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "'/> </td>
+                    <td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice']) . "</td>
+                    </tr>
+                    </form>";
+
+                    $counter++;
                 }
                 $outp .= "</tbody>";
                 break;
