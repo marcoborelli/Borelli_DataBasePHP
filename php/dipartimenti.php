@@ -24,6 +24,26 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':idResp', $cognRespDip, PDO::PARAM_INT);
 
     $db->executeQuery($tmpStatm);
+} else if (isset($_POST['pk'])) {
+    $db = clone $_SESSION["DATABASE"];
+
+    $oldPk = $_POST['pk'];
+    $codiceDip = $_POST['codiceTable'];
+    $nomeDip = $_POST['nomeTable'];
+    $sedeDip = $_POST['sedeTable'];
+    $cognRespDip = $_POST['cbCognomeImpiegatoInDipartimentiTable'];
+
+    $query = "UPDATE dipartimenti SET codice = :cod, nome = :nome, sede = :sede, id_direttore = :idResp WHERE dipartimenti.codice = :oldPk";
+
+    $tmpStatm = $db->getStatement($query);
+
+    $tmpStatm->bindParam(':cod', $codiceDip, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':oldPk', $oldPk, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':nome', $nomeDip, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':sede', $sedeDip, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':idResp', $cognRespDip, PDO::PARAM_INT);
+
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 0;

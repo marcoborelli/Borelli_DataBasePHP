@@ -190,6 +190,7 @@ class Database
     {
 
         $outp = "<table class=\"table\" >";
+        $counter = 0;
 
         switch ($index) {
             case 0: //dipartimenti
@@ -197,7 +198,16 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td> <input type='text' value='" . $row['codice'] . "'/> </td><td> <input type='text' value='" . $row['nome'] . "'/> </td><td> <input type='text' value='" . $row['sede'] . "'/> </td><td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola']) . "</td></tr>";
+                    $outp .= "<form id='formDip" . $counter . "' action='dipartimenti.php' method='POST'>
+                    <tr>
+                    <td> <input type='text' name='codiceTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['codice'] . "'/> <input type='hidden' name='pk' value='" . $row['codice'] . "'/> </td>
+                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
+                    <td> <input type='text' name='sedeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sede'] . "'/> </td>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola']) . "</td>
+                    </tr>
+                    </form>";
+
+                    $counter++;
                 }
                 $outp .= "</tbody>";
                 break;
