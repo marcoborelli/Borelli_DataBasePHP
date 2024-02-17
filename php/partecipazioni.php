@@ -20,6 +20,24 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':nomeProg', $nomProgInPartec, PDO::PARAM_STR);
 
     $db->executeQuery($tmpStatm);
+} else if (isset($_POST['pk1']) && isset($_POST['pk2'])) {
+    $db = clone $_SESSION["DATABASE"];
+
+    $oldPk1 = $_POST['pk1']; //impiegato
+    $oldPk2 = $_POST['pk2']; //progetto
+    $impiegPart = $_POST['cbCognomeImpiegatoInPartecipazioniTable'];
+    $progPart = $_POST['cbNomeProgettoInPartecipazioniTable'];
+
+    $query = "UPDATE partecipazioni SET id_impiegato = :idImpieg, id_progetto = :idProg WHERE partecipazioni.id_impiegato = :oldPk1 AND partecipazioni.id_progetto = :oldPk2";
+
+    $tmpStatm = $db->getStatement($query);
+
+    $tmpStatm->bindParam(':oldPk1', $oldPk1, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':oldPk2', $oldPk2, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':idImpieg', $impiegPart, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':idProg', $progPart, PDO::PARAM_STR);
+
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 3;

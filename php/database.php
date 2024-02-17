@@ -252,7 +252,14 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola']) . "</td><td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla']) . "</td></tr>";
+                    $outp .= "<form id='formPart" . $counter . "' action='partecipazioni.php' method='POST'>
+                    <tr>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola']) . " <input type='hidden' name='pk1' value='" . $row['matricola'] . "'/> </td>
+                    <td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla']) . " <input type='hidden' name='pk2' value='" . $row['sigla'] . "'/> </td>
+                    </tr>
+                    </form>";
+
+                    $counter++;
                 }
                 $outp .= "</tbody>";
                 break;
