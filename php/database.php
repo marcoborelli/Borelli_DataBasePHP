@@ -147,7 +147,7 @@ class Database
 
     function getBasicComboBox($index, $name, $isFirstSpace, $selectedData)
     {
-        $outp = "<select name='$name'>";
+        $outp = "<select name='$name' onchange='changedComboBox(event)'>";
 
         if ($isFirstSpace) {
             $outp .= "<option></option>";
