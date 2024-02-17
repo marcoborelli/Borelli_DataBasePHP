@@ -234,7 +234,16 @@ class Database
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
-                    $outp .= "<tr><td> <input type='text' value='" . $row['sigla'] . "'/> </td><td> <input type='text' value='" . $row['nome'] . "'/> </td><td> <input type='text' value='" . $row['bilancio'] . "'/> </td><td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola']) . "</td></tr>";
+                    $outp .= "<form id='formProg" . $counter . "' action='progetti.php' method='POST'>
+                    <tr>
+                    <td> <input type='text' name='siglaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "'/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
+                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
+                    <td> <input type='text' name='bilancioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "'/> </td>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola']) . "</td>
+                    </tr>
+                    </form>";
+
+                    $counter++;
                 }
                 $outp .= "</tbody>";
                 break;

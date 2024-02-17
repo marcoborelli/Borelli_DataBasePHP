@@ -24,6 +24,26 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':cognomeResp', $cognRespProg, PDO::PARAM_INT);
 
     $db->executeQuery($tmpStatm);
+} else if (isset($_POST['pk'])) {
+    $db = clone $_SESSION["DATABASE"];
+
+    $oldPk = $_POST['pk'];
+    $siglaProg = $_POST['siglaTable'];
+    $nomeProg = $_POST['nomeTable'];
+    $bilancioProg = $_POST['bilancioTable'];
+    $cognRespProg = $_POST['cbCognomeResponsabileInProgettiTable'];
+
+    $query = "UPDATE progetti SET sigla = :sigla, nome = :nome, bilancio = :bilancio, id_responsabile = :cognResp WHERE progetti.sigla = :oldPk";
+
+    $tmpStatm = $db->getStatement($query);
+
+    $tmpStatm->bindParam(':sigla', $siglaProg, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':oldPk', $oldPk, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':nome', $nomeProg, PDO::PARAM_STR);
+    $tmpStatm->bindParam(':bilancio', $bilancioProg, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':cognResp', $cognRespProg, PDO::PARAM_INT);
+
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 2;
