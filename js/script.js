@@ -11,6 +11,13 @@ function deselected(event) {
     newVal = document.getElementById(event.srcElement.form.id).elements[event.target.name].value;
     if (newVal != oldVal) {
         console.log("valore cambiato");
+
+        var tmpField = document.createElement("input");
+        tmpField.type = "hidden";
+        tmpField.name = "update";
+        tmpField.value = "generated with js"
+
+        document.getElementById(event.srcElement.form.id).appendChild(tmpField);
         document.getElementById(event.srcElement.form.id).submit();
     }
 }
@@ -20,5 +27,11 @@ function changedComboBox(event) {
         return;
     }
 
+    var tmpField = document.createElement("input");
+    tmpField.type = "hidden";
+    tmpField.name = "update";
+    tmpField.value = "generated with js"
+
+    document.getElementById(event.srcElement.form.id).appendChild(tmpField);
     document.getElementById(event.srcElement.form.id).submit();
 }

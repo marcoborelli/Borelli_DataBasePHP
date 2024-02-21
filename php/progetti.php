@@ -24,7 +24,7 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':cognomeResp', $cognRespProg, PDO::PARAM_INT);
 
     $db->executeQuery($tmpStatm);
-} else if (isset($_POST['pk'])) {
+} else if (isset($_POST['update'])) {
     $db = clone $_SESSION["DATABASE"];
 
     $oldPk = $_POST['pk'];

@@ -20,7 +20,7 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':nomeProg', $nomProgInPartec, PDO::PARAM_STR);
 
     $db->executeQuery($tmpStatm);
-} else if (isset($_POST['pk1']) && isset($_POST['pk2'])) {
+} else if (isset($_POST['update'])) {
     $db = clone $_SESSION["DATABASE"];
 
     $oldPk1 = $_POST['pk1']; //impiegato
