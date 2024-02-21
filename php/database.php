@@ -251,12 +251,13 @@ class Database
                 $outp .= "</tbody>";
                 break;
             case 3: //partecipazioni
-                $outp .= "<thead><tr><th scope=\"col\">Cognome impiegato</th><th scope=\"col\">Nome progetto</th></tr></thead>";
+                $outp .= "<thead><tr><th scope=\"col\">Elimina</th><th scope=\"col\">Cognome impiegato</th><th scope=\"col\">Nome progetto</th></tr></thead>";
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<form id='formPart" . $counter . "' action='partecipazioni.php' method='POST'>
                     <tr>
+                    <td> <input type='submit' name='deleteTable' value ='DEL'/></td>
                     <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola']) . " <input type='hidden' name='pk1' value='" . $row['matricola'] . "'/> </td>
                     <td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla']) . " <input type='hidden' name='pk2' value='" . $row['sigla'] . "'/> </td>
                     </tr>

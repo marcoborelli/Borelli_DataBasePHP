@@ -38,6 +38,17 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':idProg', $progPart, PDO::PARAM_STR);
 
     $db->executeQuery($tmpStatm);
+} else if (!isset($_POST['update']) && isset($_POST['pk1']) && isset($_POST['pk2'])) { //sto eliminando il record
+    $db = clone $_SESSION["DATABASE"];
+
+    $pk1 = $_POST['pk1']; //impiegato
+    $pk2 = $_POST['pk2']; //progetto
+
+    $query = "DELETE FROM partecipazioni WHERE partecipazioni.id_impiegato = :pk1 AND partecipazioni.id_progetto = :pk2";
+    $tmpStatm = $db->getStatement($query);
+    $tmpStatm->bindParam(':pk1', $pk1, PDO::PARAM_INT);
+    $tmpStatm->bindParam(':pk2', $pk2, PDO::PARAM_STR);
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 3;
