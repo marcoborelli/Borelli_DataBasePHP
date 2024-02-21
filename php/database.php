@@ -232,12 +232,13 @@ class Database
                 $outp .= "</tbody>";
                 break;
             case 2: //progetti
-                $outp .= "<thead><tr><th scope=\"col\">Sigla</th><th scope=\"col\">Nome</th><th>Bilancio</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
+                $outp .= "<thead><tr><th scope=\"col\">Elimina</th><th scope=\"col\">Sigla</th><th scope=\"col\">Nome</th><th>Bilancio</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<form id='formProg" . $counter . "' action='progetti.php' method='POST'>
                     <tr>
+                    <td> <input type='submit' name='deleteTable' value ='DEL'/></td>
                     <td> <input type='text' name='siglaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "'/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
                     <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
                     <td> <input type='text' name='bilancioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "'/> </td>
