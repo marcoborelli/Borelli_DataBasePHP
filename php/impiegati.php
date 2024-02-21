@@ -44,6 +44,15 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':idDip', $idDipImp, PDO::PARAM_STR);
 
     $db->executeQuery($tmpStatm);
+} else if (!isset($_POST['update']) && isset($_POST['pk'])) { //sto eliminando il record
+    $db = clone $_SESSION["DATABASE"];
+
+    $pk = $_POST['pk'];
+
+    $query = "DELETE FROM impiegati WHERE impiegati.matricola=:matricola";
+    $tmpStatm = $db->getStatement($query);
+    $tmpStatm->bindParam(':matricola', $pk, PDO::PARAM_INT);
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 1;
