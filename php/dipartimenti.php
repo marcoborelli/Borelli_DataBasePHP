@@ -44,6 +44,15 @@ if (!isset($_SESSION["DATABASE"])) {
     $tmpStatm->bindParam(':idResp', $cognRespDip, PDO::PARAM_INT);
 
     $db->executeQuery($tmpStatm);
+} else if (!isset($_POST['update']) && isset($_POST['pk'])) { //sto eliminando il record
+    $db = clone $_SESSION["DATABASE"];
+
+    $pk = $_POST['pk'];
+
+    $query = "DELETE FROM dipartimenti WHERE dipartimenti.codice=:cod";
+    $tmpStatm = $db->getStatement($query);
+    $tmpStatm->bindParam(':cod', $pk, PDO::PARAM_STR);
+    $db->executeQuery($tmpStatm);
 }
 
 $sheetNumber = 0;

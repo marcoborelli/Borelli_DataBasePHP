@@ -194,12 +194,13 @@ class Database
 
         switch ($index) {
             case 0: //dipartimenti
-                $outp .= "<thead><tr><th scope=\"col\">Codice</th><th scope=\"col\">Nome</th><th scope=\"col\">Sede</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
+                $outp .= "<thead><tr><th scope=\"col\">Elimina</th><th scope=\"col\">Codice</th><th scope=\"col\">Nome</th><th scope=\"col\">Sede</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<form id='formDip" . $counter . "' action='dipartimenti.php' method='POST'>
                     <tr>
+                    <td> <input type='submit' name='deleteTable' value ='DEL'/></td>
                     <td> <input type='text' name='codiceTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['codice'] . "'/> <input type='hidden' name='pk' value='" . $row['codice'] . "'/> </td>
                     <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
                     <td> <input type='text' name='sedeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sede'] . "'/> </td>
