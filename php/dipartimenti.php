@@ -110,7 +110,7 @@ $sheetNumber = 0;
                     <input type="submit" value="FILTRA">
                 </form>
             </div>
-            <div class="insData">
+            <div class="insData" <?php $db = clone $_SESSION["DATABASE"]; if($db->getPermissionLoggedUser()==0) {echo "style='display:none'";}?>>
                 <form action="" method="POST" id="formDipartimentiIns">
 
                     <label for="codiceInDipartimentiIns">Codice [PK]:</label>

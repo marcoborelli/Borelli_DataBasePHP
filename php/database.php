@@ -199,19 +199,24 @@ class Database
         $outp = "<table class=\"table\" >";
         $counter = 0;
 
+        $isReadOnly = ($this->getPermissionLoggedUser() == 0);
+        $readOnlyString = $isReadOnly ? "readonly" : ""; //se posso solo visualizzare non posso modificare le textBox
+        $hideButtonString = $isReadOnly ? "" : "<td> <input type='submit' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>"; //se posso solo visualizzare non devo poter vedere il tasto elimina record
+        $delCoulum = $isReadOnly ? "" : "<th scope=\"col\">Elimina</th>"; //se posso solo visualizzare non devo poter vedere la colonna "elimina"
+
         switch ($index) {
             case 0: //dipartimenti
-                $outp .= "<thead><tr><th scope=\"col\">Elimina</th><th scope=\"col\">Codice</th><th scope=\"col\">Nome</th><th scope=\"col\">Sede</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
+                $outp .= "<thead><tr>$delCoulum<th scope=\"col\">Codice</th><th scope=\"col\">Nome</th><th scope=\"col\">Sede</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<form id='formDip" . $counter . "' action='dipartimenti.php' method='POST'>
                     <tr>
-                    <td> <input type='submit' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>
-                    <td> <input type='text' name='codiceTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['codice'] . "'/> <input type='hidden' name='pk' value='" . $row['codice'] . "'/> </td>
-                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
-                    <td> <input type='text' name='sedeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sede'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola'], false) . "</td>
+                    $hideButtonString
+                    <td> <input type='text' name='codiceTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['codice'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['codice'] . "'/> </td>
+                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='sedeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sede'] . "' $readOnlyString/> </td>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola'], $isReadOnly) . "</td>
                     </tr>
                     </form>";
 
@@ -220,17 +225,17 @@ class Database
                 $outp .= "</tbody>";
                 break;
             case 1: //impiegati
-                $outp .= "<thead><tr><th scope=\"col\">Elimina</th><th scope=\"col\">Matricola</th><th scope=\"col\">Cognome</th><th scope=\"col\">Stipendio</th><th scope=\"col\">Dipartimento</th></tr></thead>";
+                $outp .= "<thead><tr>$delCoulum<th scope=\"col\">Matricola</th><th scope=\"col\">Cognome</th><th scope=\"col\">Stipendio</th><th scope=\"col\">Dipartimento</th></tr></thead>";
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<form id='formImp" . $counter . "' action='impiegati.php' method='POST'>
                     <tr>
-                    <td> <input type='submit' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>
-                    <td> <input type='text' name='matricolaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "'/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
-                    <td> <input type='text' name='cognomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['cognome'] . "'/> </td>
-                    <td> <input type='text' name='stipendioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice'], false) . "</td>
+                    $hideButtonString
+                    <td> <input type='text' name='matricolaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
+                    <td> <input type='text' name='cognomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['cognome'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='stipendioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "' $readOnlyString/> </td>
+                    <td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice'], $isReadOnly) . "</td>
                     </tr>
                     </form>";
 
@@ -239,17 +244,17 @@ class Database
                 $outp .= "</tbody>";
                 break;
             case 2: //progetti
-                $outp .= "<thead><tr><th scope=\"col\">Elimina</th><th scope=\"col\">Sigla</th><th scope=\"col\">Nome</th><th>Bilancio</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
+                $outp .= "<thead><tr>$delCoulum<th scope=\"col\">Sigla</th><th scope=\"col\">Nome</th><th>Bilancio</th><th scope=\"col\">Cognome Responsabile</th></tr></thead>";
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<form id='formProg" . $counter . "' action='progetti.php' method='POST'>
                     <tr>
-                    <td> <input type='submit' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>
-                    <td> <input type='text' name='siglaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "'/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
-                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
-                    <td> <input type='text' name='bilancioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola'], false) . "</td>
+                    $hideButtonString
+                    <td> <input type='text' name='siglaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
+                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='bilancioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "' $readOnlyString/> </td>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola'], $isReadOnly) . "</td>
                     </tr>
                     </form>";
 
@@ -258,15 +263,15 @@ class Database
                 $outp .= "</tbody>";
                 break;
             case 3: //partecipazioni
-                $outp .= "<thead><tr><th scope=\"col\">Elimina</th><th scope=\"col\">Cognome impiegato</th><th scope=\"col\">Nome progetto</th></tr></thead>";
+                $outp .= "<thead><tr>$delCoulum<th scope=\"col\">Cognome impiegato</th><th scope=\"col\">Nome progetto</th></tr></thead>";
 
                 $outp .= "<tbody>";
                 foreach ($queryOutp as $row) {
                     $outp .= "<form id='formPart" . $counter . "' action='partecipazioni.php' method='POST'>
                     <tr>
-                    <td> <input type='submit' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>
-                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola'], false) . " <input type='hidden' name='pk1' value='" . $row['matricola'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla'], false) . " <input type='hidden' name='pk2' value='" . $row['sigla'] . "'/> </td>
+                    $hideButtonString
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola'], $isReadOnly) . " <input type='hidden' name='pk1' value='" . $row['matricola'] . "'/> </td>
+                    <td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla'], $isReadOnly) . " <input type='hidden' name='pk2' value='" . $row['sigla'] . "'/> </td>
                     </tr>
                     </form>";
 
