@@ -35,3 +35,9 @@ function changedComboBox(event) {
     document.getElementById(event.srcElement.form.id).appendChild(tmpField);
     document.getElementById(event.srcElement.form.id).submit();
 }
+
+function onDelete(event) {
+    if(!(confirm("Sei sicuro di voler eliminare il record"))) {
+        event.preventDefault();
+    }
+}
