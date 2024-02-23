@@ -39,6 +39,8 @@ class Database
 
     public function getPermissionLoggedUser()
     {
+        self::getDatbase(); //non so perche' serva (dovrebbe gia' essere istanziato)
+
         $query = "SELECT * FROM users WHERE users.username = :username";
         $tmpStatm = self::$database->getStatement($query);
         $tmpStatm->bindParam(':username', $this->loggedUsername, PDO::PARAM_STR);
