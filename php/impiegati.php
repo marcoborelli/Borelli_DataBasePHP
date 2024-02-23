@@ -125,7 +125,7 @@ $sheetNumber = 1;
                     <label for="cbNomeDipartimentoInImpiegati">Nome dipartimento:</label>
                     <?php
                         $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegati", true, "")
+                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegati", true, "", false)
                     ?>
 
                     <br>
@@ -154,7 +154,7 @@ $sheetNumber = 1;
                     <label for="cbNomeDipartimentoInImpiegatiIns">Nome dipartimento:</label>
                     <?php
                         $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiIns", false, "")
+                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiIns", false, "", false)
                     ?>
 
                     <br>

@@ -114,7 +114,7 @@ $sheetNumber = 3;
                     <label for="cbCognomeImpiegatoInPartecipazioniIns">Cognome impiegato [PK]:</label>
                     <?php
                         $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniIns", false, "")
+                        echo $db->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniIns", false, "", false)
                     ?>
 
                     <br>
@@ -122,7 +122,7 @@ $sheetNumber = 3;
                     <label for="cbNomeProgettoInPartecipazioniIns">Nome progetto [PK]:</label>
                     <?php
                         $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniIns", false, "")
+                        echo $db->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniIns", false, "", false)
                     ?>
 
                     <br>

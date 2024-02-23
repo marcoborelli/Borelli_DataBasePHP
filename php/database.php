@@ -145,9 +145,14 @@ class Database
         return $toReturn;
     }
 
-    function getBasicComboBox($index, $name, $isFirstSpace, $selectedData)
+    function getBasicComboBox($index, $name, $isFirstSpace, $selectedData, $isReadOnly)
     {
-        $outp = "<select name='$name' onchange='changedComboBox(event)'>";
+        $readOnly = "";
+        if ($isReadOnly) {
+            $readOnly = "disabled";
+        }
+
+        $outp = "<select name='$name' onchange='changedComboBox(event)' $readOnly>";
 
         if ($isFirstSpace) {
             $outp .= "<option></option>";
@@ -204,7 +209,7 @@ class Database
                     <td> <input type='text' name='codiceTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['codice'] . "'/> <input type='hidden' name='pk' value='" . $row['codice'] . "'/> </td>
                     <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
                     <td> <input type='text' name='sedeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sede'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola']) . "</td>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola'], false) . "</td>
                     </tr>
                     </form>";
 
@@ -223,7 +228,7 @@ class Database
                     <td> <input type='text' name='matricolaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "'/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
                     <td> <input type='text' name='cognomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['cognome'] . "'/> </td>
                     <td> <input type='text' name='stipendioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice']) . "</td>
+                    <td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice'], false) . "</td>
                     </tr>
                     </form>";
 
@@ -242,7 +247,7 @@ class Database
                     <td> <input type='text' name='siglaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "'/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
                     <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "'/> </td>
                     <td> <input type='text' name='bilancioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola']) . "</td>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola'], false) . "</td>
                     </tr>
                     </form>";
 
@@ -258,8 +263,8 @@ class Database
                     $outp .= "<form id='formPart" . $counter . "' action='partecipazioni.php' method='POST'>
                     <tr>
                     <td> <input type='submit' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>
-                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola']) . " <input type='hidden' name='pk1' value='" . $row['matricola'] . "'/> </td>
-                    <td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla']) . " <input type='hidden' name='pk2' value='" . $row['sigla'] . "'/> </td>
+                    <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniTable", false, $row['matricola'], false) . " <input type='hidden' name='pk1' value='" . $row['matricola'] . "'/> </td>
+                    <td>" . $this->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniTable", false, $row['sigla'], false) . " <input type='hidden' name='pk2' value='" . $row['sigla'] . "'/> </td>
                     </tr>
                     </form>";
 

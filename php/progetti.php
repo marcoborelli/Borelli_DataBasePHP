@@ -152,7 +152,7 @@ $sheetNumber = 2;
                     <label for="cbCognomeResponsabileInProgettiIns">Cognome responsabile:</label>
                     <?php
                         $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(1, "cbCognomeResponsabileInProgettiIns", false, "")
+                        echo $db->getBasicComboBox(1, "cbCognomeResponsabileInProgettiIns", false, "", false)
                     ?>
 
                     <br>
