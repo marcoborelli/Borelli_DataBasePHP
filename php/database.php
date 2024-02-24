@@ -251,9 +251,9 @@ class Database
                     $outp .= "<form id='formProg" . $counter . "' action='progetti.php' method='POST'>
                     <tr>
                     $hideButtonString
-                    <td> <input type='text' name='siglaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
-                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "' $readOnlyString/> </td>
-                    <td> <input type='text' name='bilancioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='siglaTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
+                    <td> <input type='text' name='nomeTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='bilancioTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "' $readOnlyString/> </td>
                     <td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola'], $isReadOnly) . "</td>
                     </tr>
                     </form>";
