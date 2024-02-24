@@ -60,6 +60,7 @@ $sheetNumber = 3;
     <link rel="stylesheet" type="text/css" href="../css/div.css">
     <title>PARTECIPAZIONI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -69,7 +70,7 @@ $sheetNumber = 3;
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand">Borelli_DatabasePHP</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -90,73 +91,67 @@ $sheetNumber = 3;
             </ul>
         </div>
     </nav>
-    <div class="container">
-        <div class="dataAndFilter">
-            <div class="filter">
-                <form action="" method="POST" id="formPartecipazioniFilter">
-
-                    <label for="projNameInPartecipazioni">Nome progetto:</label>
-                    <input type="text" name="projNameInPartecipazioni" value=<?php echo (isset($_POST['projNameInPartecipazioni']) ? $_POST['projNameInPartecipazioni'] : "") ?>>
-
-                    <br>
-
-                    <label for="surnInPartecipazioni">Cognome dipendente:</label>
-                    <input type="text" name="surnInPartecipazioni" id="surnInPartecipazioni" value=<?php echo (isset($_POST['surnInPartecipazioni']) ? $_POST['surnInPartecipazioni'] : "") ?>>
-
-                    <br>
-
-                    <input type="submit" value="FILTRA">
-                </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" method="POST" id="formPartecipazioniFilter">
+                            <div class="form-group">
+                                <label for="projNameInPartecipazioni">Nome progetto:</label>
+								<input type="text" class="form-control" name="projNameInPartecipazioni" placeholder="Inserisci il nome del progetto" value=<?php echo (isset($_POST['projNameInPartecipazioni']) ? $_POST['projNameInPartecipazioni'] : "") ?>>
+								
+								<label for="surnInPartecipazioni">Cognome dipendente:</label>
+								<input type="text" class="form-control" name="surnInPartecipazioni" placeholder="Inserisci il cognome dell'impiegato" value=<?php echo (isset($_POST['surnInPartecipazioni']) ? $_POST['surnInPartecipazioni'] : "") ?>>
+							</div>
+                            <button type="submit" class="btn btn-primary">Filtra</button>
+                        </form>
+                    </div>
+                    <div class="col-md-12" <?php $db = clone $_SESSION["DATABASE"]; if($db->getPermissionLoggedUser()==0) {echo "style='display:none'";}?>>
+                        <form action="" method="POST" id="formPartecipazioniIns">
+                            <div class="form-group">
+                                <label for="cbCognomeImpiegatoInPartecipazioniIns">Cognome impiegato [PK]:</label>
+								<?php
+									$db = clone $_SESSION["DATABASE"];
+									echo $db->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniIns", false, "", false)
+								?>
+								
+                                <label for="cbNomeProgettoInPartecipazioniIns">Nome progetto [PK]:</label>
+								<?php
+									$db = clone $_SESSION["DATABASE"];
+									echo $db->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniIns", false, "", false)
+								?>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Inserisci</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="insData" <?php $db = clone $_SESSION["DATABASE"]; if($db->getPermissionLoggedUser()==0) {echo "style='display:none'";}?>>
-                <form action="" method="POST" id="formPartecipazioniIns">
+            <div class="col-md-8">
+                <?php
 
-                    <label for="cbCognomeImpiegatoInPartecipazioniIns">Cognome impiegato [PK]:</label>
-                    <?php
-                        $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(1, "cbCognomeImpiegatoInPartecipazioniIns", false, "", false)
-                    ?>
+				$db = clone $_SESSION["DATABASE"];
+				if (isset($_POST['projNameInPartecipazioni']) && isset($_POST['surnInPartecipazioni'])) {
 
-                    <br>
+					$nomeProgetto = $_POST['projNameInPartecipazioni'] . "%";
+					$cognomeImpiegato = $_POST['surnInPartecipazioni'] . "%";
 
-                    <label for="cbNomeProgettoInPartecipazioniIns">Nome progetto [PK]:</label>
-                    <?php
-                        $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(2, "cbNomeProgettoInPartecipazioniIns", false, "", false)
-                    ?>
+					$query = $db->getBasicQuery($sheetNumber);
+					$query .= " WHERE progetti.nome LIKE :projName AND impiegati.cognome LIKE :cognImp";
 
-                    <br>
+					$tmpStatm = $db->getStatement($query);
 
-                    <input type="submit" value="INSERISCI">
-                </form>
+					$tmpStatm->bindParam(':projName', $nomeProgetto, PDO::PARAM_STR);
+					$tmpStatm->bindParam(':cognImp', $cognomeImpiegato, PDO::PARAM_STR);
+
+					echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
+				} else {
+					echo $db->getBasicTable($sheetNumber);
+				}
+
+				?>
             </div>
-        </div>
-        <div class="table" id="tabella">
-            <?php
-
-            $db = clone $_SESSION["DATABASE"];
-            if (isset($_POST['projNameInPartecipazioni']) && isset($_POST['surnInPartecipazioni'])) {
-
-                $nomeProgetto = $_POST['projNameInPartecipazioni'] . "%";
-                $cognomeImpiegato = $_POST['surnInPartecipazioni'] . "%";
-
-                $query = $db->getBasicQuery($sheetNumber);
-                $query .= " WHERE progetti.nome LIKE :projName AND impiegati.cognome LIKE :cognImp";
-
-                $tmpStatm = $db->getStatement($query);
-
-                $tmpStatm->bindParam(':projName', $nomeProgetto, PDO::PARAM_STR);
-                $tmpStatm->bindParam(':cognImp', $cognomeImpiegato, PDO::PARAM_STR);
-
-                echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
-            } else {
-                echo $db->getBasicTable($sheetNumber);
-            }
-
-            ?>
         </div>
     </div>
-
 </body>
-
 </html>
