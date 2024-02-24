@@ -154,7 +154,7 @@ class Database
             $readOnly = "disabled";
         }
 
-        $outp = "<select name='$name' onchange='changedComboBox(event)' $readOnly>";
+        $outp = "<select name='$name' onchange='changedComboBox(event)' class='form-control' $readOnly>";
 
         if ($isFirstSpace) {
             $outp .= "<option></option>";
@@ -201,7 +201,7 @@ class Database
 
         $isReadOnly = ($this->getPermissionLoggedUser() == 0);
         $readOnlyString = $isReadOnly ? "readonly" : ""; //se posso solo visualizzare non posso modificare le textBox
-        $hideButtonString = $isReadOnly ? "" : "<td> <input type='submit' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>"; //se posso solo visualizzare non devo poter vedere il tasto elimina record
+        $hideButtonString = $isReadOnly ? "" : "<td> <input type='submit' class='btn btn-secondary' name='deleteTable' onclick='onDelete(event)' value ='DEL'/></td>"; //se posso solo visualizzare non devo poter vedere il tasto elimina record
         $delCoulum = $isReadOnly ? "" : "<th scope=\"col\">Elimina</th>"; //se posso solo visualizzare non devo poter vedere la colonna "elimina"
 
         switch ($index) {
@@ -213,9 +213,9 @@ class Database
                     $outp .= "<form id='formDip" . $counter . "' action='dipartimenti.php' method='POST'>
                     <tr>
                     $hideButtonString
-                    <td> <input type='text' name='codiceTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['codice'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['codice'] . "'/> </td>
-                    <td> <input type='text' name='nomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "' $readOnlyString/> </td>
-                    <td> <input type='text' name='sedeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sede'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='codiceTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['codice'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['codice'] . "'/> </td>
+                    <td> <input type='text' name='nomeTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='sedeTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sede'] . "' $readOnlyString/> </td>
                     <td>" . $this->getBasicComboBox(1, "cbCognomeImpiegatoInDipartimentiTable", false, $row['matricola'], $isReadOnly) . "</td>
                     </tr>
                     </form>";

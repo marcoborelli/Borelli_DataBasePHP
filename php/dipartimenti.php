@@ -64,6 +64,7 @@ $sheetNumber = 0;
     <link rel="stylesheet" type="text/css" href="../css/div.css">
     <title>DIPARTIMENTI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -73,7 +74,7 @@ $sheetNumber = 0;
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand">Borelli_DatabasePHP</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -94,78 +95,71 @@ $sheetNumber = 0;
             </ul>
         </div>
     </nav>
-    <div class="container">
-        <div class="dataAndFilter">
-            <div class="filter">
-                <form action="" method="POST" id="formDipartimentiFilter">
-
-                    <label for="cityNameInDipartimenti">Nome città:</label>
-                    <input type="text" name="cityNameInDipartimenti" value=<?php echo (isset($_POST['cityNameInDipartimenti']) ? $_POST['cityNameInDipartimenti'] : "") ?>> <br>
-
-                    <label for="surnameRespInDipartimenti">Cognome responsabile:</label>
-                    <input type="text" name="surnameRespInDipartimenti" value=<?php echo (isset($_POST['surnameRespInDipartimenti']) ? $_POST['surnameRespInDipartimenti'] : "") ?>>
-
-                    <br>
-
-                    <input type="submit" value="FILTRA">
-                </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" method="POST" id="formDipartimentiFilter">
+                            <div class="form-group">
+                                <label for="cityNameInDipartimenti">Nome città:</label>
+								<input type="text" class="form-control" name="cityNameInDipartimenti" placeholder="Inserisci il nome della città" value=<?php echo (isset($_POST['cityNameInDipartimenti']) ? $_POST['cityNameInDipartimenti'] : "") ?>>
+                                
+								<label for="surnameRespInDipartimenti">Cognome responsabile::</label>
+								<input type="text" class="form-control" name="surnameRespInDipartimenti" placeholder="Inserisci il cognome del responsabile" value=<?php echo (isset($_POST['surnameRespInDipartimenti']) ? $_POST['surnameRespInDipartimenti'] : "") ?>>
+								
+							</div>	
+							<button type="submit" class="btn btn-primary">Filtra</button>
+                        </form>
+                    </div>
+                    <div class="col-md-12" <?php $db = clone $_SESSION["DATABASE"]; if($db->getPermissionLoggedUser()==0) {echo "style='display:none'";}?>>
+                        <form action="" method="POST" id="formDipartimentiIns">
+                            <div class="form-group">
+                                <label for="codiceInDipartimentiIns">Codice [PK]:</label>
+                                <input type="text" class="form-control" name="codiceInDipartimentiIns" placeholder="Inserire il codice del dipartimento" required>
+								
+								<label for="nomeInDipartimenti">Nome dipartimento:</label>
+                                <input type="text" class="form-control" name="nomeInDipartimenti" placeholder="Inserire il nome del dipartimento" required>
+								
+								<label for="sedeInDipartimenti">Sede:</label>
+                                <input type="text" class="form-control" name="sedeInDipartimenti" placeholder="Inserire la sede del dipartimento" required>
+								
+								<label for="cbCognomeResponsabileInDipartimentiIns">Cognome responsabile:</label>
+								<?php
+									$db = clone $_SESSION["DATABASE"];
+									echo $db->getBasicComboBox(1, "cbCognomeResponsabileInDipartimentiIns", false, "", false)
+								?>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Inserisci</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="insData" <?php $db = clone $_SESSION["DATABASE"]; if($db->getPermissionLoggedUser()==0) {echo "style='display:none'";}?>>
-                <form action="" method="POST" id="formDipartimentiIns">
+            <div class="col-md-8">
+                <?php
 
-                    <label for="codiceInDipartimentiIns">Codice [PK]:</label>
-                    <input type="text" name="codiceInDipartimentiIns" required>
+				$db = clone $_SESSION["DATABASE"];
+				if (isset($_POST['cityNameInDipartimenti']) && isset($_POST['surnameRespInDipartimenti'])) {
 
-                    <br>
+					$nomeCitta = $_POST['cityNameInDipartimenti'] . "%";
+					$cognResp = $_POST['surnameRespInDipartimenti'] . "%";
 
-                    <label for="nomeInDipartimenti">Nome dipartimento:</label>
-                    <input type="text" name="nomeInDipartimenti" required>
+					$query = $db->getBasicQuery($sheetNumber);
+					$query .= " WHERE dipartimenti.sede LIKE :nomeCitta AND impiegati.cognome LIKE :cognImp";
 
-                    <br>
+					$tmpStatm = $db->getStatement($query);
 
-                    <label for="sedeInDipartimenti">Sede:</label>
-                    <input type="text" name="sedeInDipartimenti" required>
+					$tmpStatm->bindParam(':nomeCitta', $nomeCitta, PDO::PARAM_STR);
+					$tmpStatm->bindParam(':cognImp', $cognResp, PDO::PARAM_STR);
 
-                    <br>
+					echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
+				} else {
+					echo $db->getBasicTable($sheetNumber);
+				}
 
-                    <label for="cbCognomeResponsabileInDipartimentiIns">Cognome responsabile:</label>
-                    <?php
-                        $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(1, "cbCognomeResponsabileInDipartimentiIns", false, "", false)
-                    ?>
-
-                    <br>
-
-                    <input type="submit" value="INSERISCI">
-                </form>
+				?>
             </div>
-        </div>
-        <div class="table" id="tabella">
-            <?php
-
-            $db = clone $_SESSION["DATABASE"];
-            if (isset($_POST['cityNameInDipartimenti']) && isset($_POST['surnameRespInDipartimenti'])) {
-
-                $nomeCitta = $_POST['cityNameInDipartimenti'] . "%";
-                $cognResp = $_POST['surnameRespInDipartimenti'] . "%";
-
-                $query = $db->getBasicQuery($sheetNumber);
-                $query .= " WHERE dipartimenti.sede LIKE :nomeCitta AND impiegati.cognome LIKE :cognImp";
-
-                $tmpStatm = $db->getStatement($query);
-
-                $tmpStatm->bindParam(':nomeCitta', $nomeCitta, PDO::PARAM_STR);
-                $tmpStatm->bindParam(':cognImp', $cognResp, PDO::PARAM_STR);
-
-                echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
-            } else {
-                echo $db->getBasicTable($sheetNumber);
-            }
-
-            ?>
         </div>
     </div>
-
 </body>
-
 </html>
