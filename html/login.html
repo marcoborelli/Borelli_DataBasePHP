@@ -9,28 +9,26 @@
 </head>
 
 <body>
-
-    <div class="d-flex justify-content-center align-items-center">
-    <form action="../php/login.php" method="POST">
-        <div class="mb-3">
-            <label class="col-sm-2 col-form-label">Utente:</label>
-            <div class="col-sm-10">
-                <input class="form-control-sm" type="text" name="user" required>
-            </div>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <h1 class="text-center mb-4">Login</h1>
+        <form action="../php/login.php" method="POST">
+        <div class="form-group">
+            <label for="user">Username</label>
+            <input type="text" class="form-control" name="user" placeholder="Inserisci il tuo username">
         </div>
-
-        <div class="mb-3">
-            <label class="col-sm-2 col-form-label">Password:</label>
-            <div class="col-sm-10">
-                <input class="form-control-sm" type="password" name="password" required>
-            </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Inserisci la tua password">
         </div>
-
-        <input class="btn btn-primary" type="submit" value="Submit">
-        <input class="btn btn-primary" type="button" onclick="window.location.href='signin.html'" value="Sign-in">
-    </form>
+        <button type="submit" class="btn btn-primary">Accedi</button>
+        </form>
+        <div class="text-center mt-3">
+        <a href="signin.html">Non hai un account? Registrati qui</a>
+        </div>
     </div>
-
+    </div>
+</div>
 </body>
-
 </html>
