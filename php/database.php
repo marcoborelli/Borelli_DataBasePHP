@@ -232,9 +232,9 @@ class Database
                     $outp .= "<form id='formImp" . $counter . "' action='impiegati.php' method='POST'>
                     <tr>
                     $hideButtonString
-                    <td> <input type='text' name='matricolaTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
-                    <td> <input type='text' name='cognomeTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['cognome'] . "' $readOnlyString/> </td>
-                    <td> <input type='text' name='stipendioTable' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='matricolaTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
+                    <td> <input type='text' name='cognomeTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['cognome'] . "' $readOnlyString/> </td>
+                    <td> <input type='text' name='stipendioTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "' $readOnlyString/> </td>
                     <td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice'], $isReadOnly) . "</td>
                     </tr>
                     </form>";

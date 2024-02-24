@@ -64,6 +64,7 @@ $sheetNumber = 1;
     <link rel="stylesheet" type="text/css" href="../css/div.css">
     <title>IMPIEGATI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -73,7 +74,7 @@ $sheetNumber = 1;
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand">Borelli_DatabasePHP</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -94,115 +95,105 @@ $sheetNumber = 1;
             </ul>
         </div>
     </nav>
-    <div class="container">
-        <div class="dataAndFilter">
-            <div class="filter">
-                <form action="" method="POST" id="formImpiegatiFilter">
-
-                    <label for="surnameInImpiegati">Cognome:</label>
-                    <input type="text" name="surnameInImpiegati" value=<?php echo (isset($_POST['surnameInImpiegati']) ? $_POST['surnameInImpiegati'] : "") ?>>
-
-                    <br>
-
-                    <label for="cbOperatoreStipendioInDipartimenti">Stipendio:</label>
-                    <select name="cbOperatoreStipendioInDipartimenti">
-                        <?php
-                            $comboBoxValue = isset($_SESSION['cbOperatoreStipendioInDipartimenti']) ? $_SESSION['cbOperatoreStipendioInDipartimenti'] : "";
-                        ?>
-
-                        <option value="" <?php if ($comboBoxValue == "") echo ""; ?>></option>
-                        <option value="<" <?php if ($comboBoxValue == "<") echo "<"; ?>><</option>
-                        <option value="<=" <?php if ($comboBoxValue == "<=") echo "<="; ?>><=</option>
-                        <option value="=" <?php if ($comboBoxValue == "=") echo "="; ?>>=</option>
-                        <option value=">=" <?php if ($comboBoxValue == ">=") echo ">="; ?>>>=</option>
-                        <option value=">" <?php if ($comboBoxValue == ">") echo ">"; ?>>></option>
-                    </select>
-
-                    <input type="text" name="stipendioInDipartimenti" id="stipendioInDipartimenti" value=<?php echo (isset($_POST['stipendioInDipartimenti']) ? $_POST['stipendioInDipartimenti'] : "") ?>>
-
-                    <br>
-
-                    <label for="cbNomeDipartimentoInImpiegati">Nome dipartimento:</label>
-                    <?php
-                        $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegati", true, "", false)
-                    ?>
-
-                    <br>
-
-                    <input type="submit" value="FILTRA">
-                </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" method="POST" id="formImpiegatiFilter">
+                            <div class="form-group">
+                                <label for="surnameInImpiegati">Cognome:</label>
+								<input type="text" class="form-control" name="surnameInImpiegati" placeholder="Inserisci il cognome dell'impiegato" value=<?php echo (isset($_POST['surnameInImpiegati']) ? $_POST['surnameInImpiegati'] : "") ?>>
+								
+                                <label for="cbOperatoreStipendioInDipartimenti">Stipendio:</label>
+								<div class="form-row">
+									<div class="form-group col-md-2">
+										<select class="form-control" name="cbOperatoreStipendioInDipartimenti">
+											<option value=""></option>
+											<option value="<"><</option>
+											<option value="<="><=</option>
+											<option value="=">=</option>
+											<option value=">=">>=</option>
+											<option value=">">></option>
+										</select>
+									</div>
+									<div class="form-group col-md-10">
+										<input type="text" class="form-control" name="stipendioInDipartimenti" placeholder="Inserisci lo stipendio" value=<?php echo (isset($_POST['stipendioInDipartimenti']) ? $_POST['stipendioInDipartimenti'] : "") ?>>
+									</div>
+								</div>
+								
+								<label for="cbNomeDipartimentoInImpiegati">Nome dipartimento:</label>
+								<?php
+									$db = clone $_SESSION["DATABASE"];
+									echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegati", true, "", false)
+								?>
+								
+							</div>
+                            <button type="submit" class="btn btn-primary">Filtra</button>
+                        </form>
+                    </div>
+                    <div class="col-md-12" <?php $db = clone $_SESSION["DATABASE"]; if($db->getPermissionLoggedUser()==0) {echo "style='display:none'";}?>>
+                        <form action="" method="POST" id="formImpiegatiIns">
+                            <div class="form-group">
+                                <label for="matricolaInImpiegatiIns">Matricola [PK]:</label>
+                                <input type="text" class="form-control" name="matricolaInImpiegatiIns" placeholder="Inserire la matricola dell'impiegato" required>
+								
+								<label for="cognomeInImpiegatiIns">Cognome:</label>
+                                <input type="text" class="form-control" name="cognomeInImpiegatiIns" placeholder="Inserire il cognome dell'impiegato" required>
+								
+								<label for="stipendioInImpiegatiIns">Stipendio:</label>
+                                <input type="text" class="form-control" name="stipendioInImpiegatiIns" placeholder="Inserire lo stipendio dell'impiegato" required>
+								
+								<label for="cbNomeDipartimentoInImpiegatiIns">Nome dipartimento:</label>
+								<?php
+									$db = clone $_SESSION["DATABASE"];
+									echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiIns", false, "", false)
+								?>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Inserisci</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="insData" <?php $db = clone $_SESSION["DATABASE"]; if($db->getPermissionLoggedUser()==0) {echo "style='display:none'";}?>>
-                <form action="" method="POST" id="formImpiegatiIns">
+            <div class="col-md-8">
+                <?php
 
-                    <label for="matricolaInImpiegatiIns">Matricola [PK]:</label>
-                    <input type="text" name="matricolaInImpiegatiIns" required>
+				$db = clone $_SESSION["DATABASE"];
+				if (isset($_POST['surnameInImpiegati']) && isset($_POST['cbOperatoreStipendioInDipartimenti'])
+					&& isset($_POST['stipendioInDipartimenti']) && isset($_POST['cbNomeDipartimentoInImpiegati'])) {
 
-                    <br>
+					$cognImp = $_POST['surnameInImpiegati'] . "%";
+					$operatore = $_POST['cbOperatoreStipendioInDipartimenti'];
+					$stipendio = $_POST['stipendioInDipartimenti'];
+					$idDipartimento = $_POST['cbNomeDipartimentoInImpiegati'];
 
-                    <label for="cognomeInImpiegatiIns">Cognome:</label>
-                    <input type="text" name="cognomeInImpiegatiIns" required>
+					$query = $db->getBasicQuery($sheetNumber);
+					$query .= " WHERE impiegati.cognome LIKE :cognImp";
+					if ($operatore != "") {
+						$query .= " AND impiegati.stipendio $operatore :stipendio";
+					}
+					if ($idDipartimento != "") {
+						$query .= " AND impiegati.id_dipartimento = :idDipartimento";
+					}
 
-                    <br>
+					$tmpStatm = $db->getStatement($query);
 
-                    <label for="stipendioInImpiegatiIns">Stipendio:</label>
-                    <input type="text" name="stipendioInImpiegatiIns" required>
+					$tmpStatm->bindParam(':cognImp', $cognImp, PDO::PARAM_STR);
+					if ($operatore != "") {
+						$tmpStatm->bindParam(':stipendio', $stipendio, PDO::PARAM_INT);
+					}
+					if ($idDipartimento != "") {
+						$tmpStatm->bindParam(':idDipartimento', $idDipartimento, PDO::PARAM_STR);
+					}
 
-                    <br>
+					echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
+				} else {
+					echo $db->getBasicTable($sheetNumber);
+				}
 
-                    <label for="cbNomeDipartimentoInImpiegatiIns">Nome dipartimento:</label>
-                    <?php
-                        $db = clone $_SESSION["DATABASE"];
-                        echo $db->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiIns", false, "", false)
-                    ?>
-
-                    <br>
-
-                    <input type="submit" value="INSERISCI">
-                </form>
+				?>
             </div>
-        </div>
-        <div class="table" id="tabella">
-            <?php
-
-            $db = clone $_SESSION["DATABASE"];
-            if (isset($_POST['surnameInImpiegati']) && isset($_POST['cbOperatoreStipendioInDipartimenti'])
-                && isset($_POST['stipendioInDipartimenti']) && isset($_POST['cbNomeDipartimentoInDipartimenti'])) {
-
-                $cognImp = $_POST['surnameInImpiegati'] . "%";
-                $operatore = $_POST['cbOperatoreStipendioInDipartimenti'];
-                $stipendio = $_POST['stipendioInDipartimenti'];
-                $idDipartimento = $_POST['cbNomeDipartimentoInDipartimenti']; //TODO: da vedere se prende davvero il value o no
-
-                $query = $db->getBasicQuery($sheetNumber);
-                $query .= " WHERE impiegati.cognome LIKE :cognImp";
-                if ($operatore != "") {
-                    $query .= " AND impiegati.stipendio $operatore :stipendio";
-                }
-                if ($idDipartimento != "") {
-                    $query .= " AND impiegati.id_dipartimento = :idDipartimento";
-                }
-
-                $tmpStatm = $db->getStatement($query);
-
-                $tmpStatm->bindParam(':cognImp', $cognImp, PDO::PARAM_STR);
-                if ($operatore != "") {
-                    $tmpStatm->bindParam(':stipendio', $stipendio, PDO::PARAM_INT);
-                }
-                if ($idDipartimento != "") {
-                    $tmpStatm->bindParam(':idDipartimento', $idDipartimento, PDO::PARAM_STR);
-                }
-
-                echo $db->getTable($sheetNumber, $db->executeQuery($tmpStatm));
-            } else {
-                echo $db->getBasicTable($sheetNumber);
-            }
-
-            ?>
         </div>
     </div>
-
 </body>
-
 </html>
