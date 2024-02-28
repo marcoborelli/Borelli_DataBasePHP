@@ -232,9 +232,9 @@ class Database
                     $outp .= "<form id='formImp" . $counter . "' action='impiegati.php' method='POST'>
                     <tr>
                     $hideButtonString
-                    <td> <input type='text' name='matricolaTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
+                    <td> <input type='number' name='matricolaTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['matricola'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['matricola'] . "'/> </td>
                     <td> <input type='text' name='cognomeTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['cognome'] . "' $readOnlyString/> </td>
-                    <td> <input type='text' name='stipendioTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "' $readOnlyString/> </td>
+                    <td> <input type='number' name='stipendioTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['stipendio'] . "' $readOnlyString/> </td>
                     <td>" . $this->getBasicComboBox(0, "cbNomeDipartimentoInImpiegatiTable", false, $row['codice'], $isReadOnly) . "</td>
                     </tr>
                     </form>";
@@ -253,7 +253,7 @@ class Database
                     $hideButtonString
                     <td> <input type='text' name='siglaTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['sigla'] . "' $readOnlyString/> <input type='hidden' name='pk' value='" . $row['sigla'] . "'/> </td>
                     <td> <input type='text' name='nomeTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['nome'] . "' $readOnlyString/> </td>
-                    <td> <input type='text' name='bilancioTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "' $readOnlyString/> </td>
+                    <td> <input type='number' name='bilancioTable' class='form-control' onfocus='selected(event)' onblur='deselected(event)' value='" . $row['bilancio'] . "' $readOnlyString/> </td>
                     <td>" . $this->getBasicComboBox(1, "cbCognomeResponsabileInProgettiTable", false, $row['matricola'], $isReadOnly) . "</td>
                     </tr>
                     </form>";

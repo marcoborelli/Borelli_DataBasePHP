@@ -120,7 +120,7 @@ $sheetNumber = 2;
 										</select>
 									</div>
 									<div class="form-group col-md-10">
-										<input type="text" class="form-control" name="bilancioInDipartimenti" placeholder="Inserisci il bilancio" value=<?php echo (isset($_POST['bilancioInDipartimenti']) ? $_POST['bilancioInDipartimenti'] : "") ?>>
+										<input type="number" class="form-control" name="bilancioInDipartimenti" placeholder="Inserisci il bilancio" value=<?php echo (isset($_POST['bilancioInDipartimenti']) ? $_POST['bilancioInDipartimenti'] : "") ?>>
 									</div>
 								</div>
 								
@@ -141,7 +141,7 @@ $sheetNumber = 2;
                                 <input type="text" class="form-control" name="nomeInProgettiIns" placeholder="Inserire il nome del progetto" required>
 								
 								<label for="bilancioInProgettiIns">Bilancio:</label>
-                                <input type="text" class="form-control" name="bilancioInProgettiIns" placeholder="Inserire il bilancio del progetto" required>
+                                <input type="number" class="form-control" name="bilancioInProgettiIns" placeholder="Inserire il bilancio del progetto" required>
 								
 								<label for="cbCognomeResponsabileInProgettiIns">Cognome responsabile:</label>
 								<?php

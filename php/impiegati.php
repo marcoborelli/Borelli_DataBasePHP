@@ -117,7 +117,7 @@ $sheetNumber = 1;
 										</select>
 									</div>
 									<div class="form-group col-md-10">
-										<input type="text" class="form-control" name="stipendioInDipartimenti" placeholder="Inserisci lo stipendio" value=<?php echo (isset($_POST['stipendioInDipartimenti']) ? $_POST['stipendioInDipartimenti'] : "") ?>>
+										<input type="number" class="form-control" name="stipendioInDipartimenti" placeholder="Inserisci lo stipendio" value=<?php echo (isset($_POST['stipendioInDipartimenti']) ? $_POST['stipendioInDipartimenti'] : "") ?>>
 									</div>
 								</div>
 								
@@ -135,13 +135,13 @@ $sheetNumber = 1;
                         <form action="" method="POST" id="formImpiegatiIns">
                             <div class="form-group">
                                 <label for="matricolaInImpiegatiIns">Matricola [PK]:</label>
-                                <input type="text" class="form-control" name="matricolaInImpiegatiIns" placeholder="Inserire la matricola dell'impiegato" required>
+                                <input type="number" class="form-control" name="matricolaInImpiegatiIns" placeholder="Inserire la matricola dell'impiegato" required>
 								
 								<label for="cognomeInImpiegatiIns">Cognome:</label>
                                 <input type="text" class="form-control" name="cognomeInImpiegatiIns" placeholder="Inserire il cognome dell'impiegato" required>
 								
 								<label for="stipendioInImpiegatiIns">Stipendio:</label>
-                                <input type="text" class="form-control" name="stipendioInImpiegatiIns" placeholder="Inserire lo stipendio dell'impiegato" required>
+                                <input type="number" class="form-control" name="stipendioInImpiegatiIns" placeholder="Inserire lo stipendio dell'impiegato" required>
 								
 								<label for="cbNomeDipartimentoInImpiegatiIns">Nome dipartimento:</label>
 								<?php
